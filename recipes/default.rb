@@ -18,6 +18,11 @@
 # limitations under the License.
 #
 
+execute "apt-get-update" do
+  command "apt-get update"
+  action :nothing
+end.run_action(:install)
+
 # Run apt-get update to create the stamp file
 execute "apt-get-update" do
   command "apt-get update"
@@ -48,3 +53,6 @@ end
     action :create
   end
 end
+
+
+
