@@ -18,7 +18,7 @@
 # limitations under the License.
 #
 
-execute "apt-get-update" do
+execute "apt-get-update-install" do
   command "apt-get update"
   action :nothing
 end.run_action(:install)
