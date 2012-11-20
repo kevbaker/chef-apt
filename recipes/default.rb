@@ -23,36 +23,36 @@ execute "apt-get-update-install" do
   action :nothing
 end.run_action(:install)
 
-# Run apt-get update to create the stamp file
-execute "apt-get-update" do
-  command "apt-get update"
-  ignore_failure true
-  not_if do ::File.exists?('/var/lib/apt/periodic/update-success-stamp') end
-  action :nothing
-end
+## Run apt-get update to create the stamp file
+#execute "apt-get-update" do
+  #command "apt-get update"
+  #ignore_failure true
+  #not_if do ::File.exists?('/var/lib/apt/periodic/update-success-stamp') end
+  #action :nothing
+#end
 
-# provides /var/lib/apt/periodic/update-success-stamp on apt-get update
-package "update-notifier-common" do
-  notifies :run, resources(:execute => "apt-get-update"), :immediately
-end
+## provides /var/lib/apt/periodic/update-success-stamp on apt-get update
+#package "update-notifier-common" do
+  #notifies :run, resources(:execute => "apt-get-update"), :immediately
+#end
 
-execute "apt-get-update-periodic" do
-  command "apt-get update"
-  ignore_failure true
-  only_if do
-    File.exists?('/var/lib/apt/periodic/update-success-stamp') &&
-    File.mtime('/var/lib/apt/periodic/update-success-stamp') < Time.now - 86400
-  end
-end
+#execute "apt-get-update-periodic" do
+  #command "apt-get update"
+  #ignore_failure true
+  #only_if do
+    #File.exists?('/var/lib/apt/periodic/update-success-stamp') &&
+    #File.mtime('/var/lib/apt/periodic/update-success-stamp') < Time.now - 86400
+  #end
+#end
 
-%w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
-  directory dirname do
-    owner "root"
-    group "root"
-    mode  0644
-    action :create
-  end
-end
+#%w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
+  #directory dirname do
+    #owner "root"
+    #group "root"
+    #mode  0644
+    #action :create
+  #end
+#end
 
 
 
